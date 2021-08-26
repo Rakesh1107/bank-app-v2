@@ -4,7 +4,7 @@ public class Account {
 
     private int userId;
     private long accountNumber;
-    private long balance = 0;
+    private long balance;
     private String branch;
     private long time;
 

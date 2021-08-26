@@ -2,6 +2,7 @@ package persistence;
 
 import pojo.Account;
 import pojo.Customer;
+import pojo.Transaction;
 import validator.Validator;
 import exception.BankException;
 
@@ -34,33 +35,29 @@ public class Connector implements Persistence {
         
     }
 
-    public static void main(String[] args) throws BankException {
-        Connector connector = new Connector();
+ 
+    public List<Transaction> getTransactions() throws BankException {
+    	List<Transaction> transactions = new ArrayList<>();
 
-        List<Customer> customers = new ArrayList<>();
+        try (Statement statement = getConnection().createStatement()) {
+            String selectQuery = "select * from transactions";
 
-        Customer customer1 = new Customer();
-        customer1.setName("Rahul");
-        customer1.setMobileNumber(839889389);
-        customer1.setAddress("Bengaluru");
+            try (ResultSet resultSet = statement.executeQuery(selectQuery)) {
+                while (resultSet.next()) {
+                    long accountNumber = resultSet.getLong(2);
+                    long amount = resultSet.getLong(3);
 
-        Customer customer2 = new Customer();
-        customer2.setName("Ramesh");
-        customer2.setMobileNumber(981822891);
-        customer2.setAddress("Chennai");
-
-        customers.add(customer1);
-        customers.add(customer2);
-
-        try {
-            List<Integer> list = connector.insertIntoCustomers(customers);
-            for (int i: list)
-                System.out.println(i);
-        }
-        catch (BankException exception) {
-            System.out.println(exception.getMessage());
-        }
-
+                    Transaction transaction = new Transaction();
+                    transaction.setAccountNumber(accountNumber);
+                    transaction.setAmount(amount);
+                    
+                    transactions.add(transaction);
+                }
+                return transactions;
+            }
+        } catch (SQLException exception) {
+            throw new BankException("Unable to retrieve users at the moment", exception);
+        } 
     }
 
     public List<Customer> getCustomers() throws BankException {

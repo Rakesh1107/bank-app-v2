@@ -2,4 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<header><h2>Welcome</h2></header>
+<header>
+<img src="bank.png" alt="bank-logo" width="50px">
+<h2>Bank</h2>
+</header>

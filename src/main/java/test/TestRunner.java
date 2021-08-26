@@ -14,7 +14,6 @@ public class TestRunner {
 		try {
 			initiator.initiate();
 		} catch (BankException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		}

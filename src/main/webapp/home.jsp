@@ -16,7 +16,10 @@
 <title>Welcome</title>
 </head>
 <body>
+
+	<p>${message}</p>
 	
+
 	<div class="sidenav">
 	<a href="http://localhost:8080/Bank-App/controller?page=accounts">Accounts</a><br>
 	<a href="http://localhost:8080/Bank-App/controller?page=customers">Customers</a><br>
